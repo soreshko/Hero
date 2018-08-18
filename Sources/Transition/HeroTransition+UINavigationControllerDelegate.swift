@@ -22,6 +22,12 @@
 
 import UIKit
 
+#if swift(>=4.2)
+public typealias HRNavigationControllerOperation = UINavigationController.Operation
+#else
+public typealias HRNavigationControllerOperation = UINavigationControllerOperation
+#endif
+
 extension HeroTransition: UINavigationControllerDelegate {
   public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
     if let previousNavigationDelegate = navigationController.previousNavigationDelegate {
@@ -35,7 +41,7 @@ extension HeroTransition: UINavigationControllerDelegate {
     }
   }
   
-  public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+  public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: HRNavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
     guard !isTransitioning else { return nil }
     self.state = .notified
     self.isPresenting = operation == .push
